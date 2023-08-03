@@ -90,3 +90,7 @@ footer {
     height: 50px;
     background-color: gray;
 }
+
+canvas {
+    border: 1px solid #000000;
+}

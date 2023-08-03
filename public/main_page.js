@@ -1,20 +1,20 @@
 const menu=document.querySelector(".menu");
 const subBar=document.querySelector(".menu>.sub");
 
-let subToggle=true,i=0;
+let subToggle=true, index = 0;
 let _up,_down;
 const framerate= 120 / 10000;
 
 function up(){
-    subBar.style.height=`${i++}px`;
-    if(i>120){
+    subBar.style.height=`${index++}px`;
+    if(index > 120){
         clearInterval(_up);
     }
 }
 
 function down(){
-    subBar.style.height=`${i--}px`;
-    if(i<0){
+    subBar.style.height=`${index--}px`;
+    if(index<0){
         clearInterval(_down);
     }
 }
