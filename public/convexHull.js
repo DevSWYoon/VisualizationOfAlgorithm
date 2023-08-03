@@ -1,4 +1,5 @@
 let s = [];
+
 function getCcw(p1, p2, p3) {
     return p1.x * p2.y + p2.x * p3.y + p3.x * p1.y - p1.y * p2.x - p2.y * p3.x - p3.y * p1.x
 }
@@ -45,8 +46,8 @@ async function drawLinesByConvexHullAlgorithm() {
 
     for(let i = 2; i < points.length; i++) {
         await delay();
+        ccwTextElement.innerText = 'CCW : ' + getCcw(points[s[top - 1]], points[s[top]], points[i]);
         drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
-
 
         while (s.length >= 1 && getCcw(points[s[top - 1]], points[s[top]], points[i]) <= 0) {
             top--;
@@ -69,4 +70,9 @@ async function drawLinesByConvexHullAlgorithm() {
 
     await delay();
     drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[0].x, points[0].y);
+
+    await delay();
+    convexHullTextElement.innerText = 'CONVEX HULL : ' + s.map(i => `(${points[i].x}, ${points[i].y})`).join(' -> ');
 }
+
+drawGrid('lightgray');
