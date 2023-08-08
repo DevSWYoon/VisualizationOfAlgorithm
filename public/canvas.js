@@ -1,11 +1,11 @@
-let points = [];
-let delayTime = 100;
+let delayTime = 50;
 
 const ccwTextElement = document.getElementById('ccwText');
 const convexHullTextElement = document.getElementById('convexHullText');
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
+
 
 async function delay() {
     return new Promise(resolve => setTimeout(resolve, delayTime));
@@ -42,47 +42,6 @@ function drawGrid(color) {
         ctx.moveTo(i * cellSize, 0);
         ctx.lineTo(i * cellSize, canvasHeight);
         ctx.stroke();
-    }
-}
-
-function randomPoints() {
-    for (let i = 0; i < 10; i++) {
-        points.push({ x: Math.random() * 700 + 50, y: Math.random() * 500 + 50});
-    }
-
-    drawPoints();
-}
-
-
-
-function drawPoint(x, y) {
-    ctx.fillStyle = 'red';
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-    ctx.fill();
-}
-
-function drawPoints() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrid('lightgray');
-
-    for (let i = 0; i < points.length; i++) {
-        drawPoint(points[i].x, points[i].y);
-    }
-}
-
-function addPoint() {
-    const xInput = document.getElementById('xInput');
-    const yInput = document.getElementById('yInput');
-    const x = parseInt(xInput.value);
-    const y = parseInt(yInput.value);
-
-    if (!isNaN(x) && !isNaN(y)) {
-        points.push({ x, y });
-        drawPoints();
-
-        xInput.value = '';
-        yInput.value = '';
     }
 }
 
