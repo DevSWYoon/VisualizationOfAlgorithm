@@ -1,10 +1,14 @@
+const ccwTextElement = document.getElementById('ccwText');
+const convexHullTextElement = document.querySelector('.convexHullText');
+const convexHullPointsTextElement = document.querySelector('.pointsText');
+
 let points = [];
 
 let s = [];
 
 function randomPoints() {
     for (let i = 0; i < 10; i++) {
-        points.push({ x: Math.random() * 700 + 50, y: Math.random() * 500 + 50});
+        points.push({ x: Math.random() * canvas.width * 0.9 + canvas.width * 0.05, y: Math.random() * canvas.height * 0.9 + canvas.height * 0.05});
     }
 
     drawPoints();
@@ -24,6 +28,8 @@ function drawPoints() {
     for (let i = 0; i < points.length; i++) {
         drawPoint(points[i].x, points[i].y);
     }
+
+    convexHullPointsTextElement.innerHTML = "Points : " + "<br>" + points.map(p => `(${p.x.toFixed(3)}, ${p.y.toFixed(3)})`).join("<br>");
 }
 
 function addPoint() {
@@ -117,7 +123,15 @@ async function drawLinesByConvexHullAlgorithm() {
     drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[0].x, points[0].y);
 
     await delay();
-    convexHullTextElement.innerText = 'CONVEX HULL : ' + s.map(i => `(${points[i].x}, ${points[i].y})`).join(' -> ');
+    convexHullTextElement.innerHTML = 'CONVEX HULL : <br>' + s.map(i => `(${points[i].x}, ${points[i].y})`).join(' -> ');
+}
+
+function reset() {
+    points = [];
+    s = [];
+    drawPoints();
+    ccwTextElement.innerText = 'CCW : ';
+    convexHullTextElement.innerText = 'CONVEX HULL : ';
 }
 
 drawGrid('lightgray');
