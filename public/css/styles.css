@@ -1,0 +1,48 @@
+body, h1, h2, h3, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #ebe5e7;
+}
+
+input {
+    width: 5%;
+}
+
+.content-container {
+    display: flex;
+    padding-left: 5%;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-top: 80px;
+    margin-bottom: 50px;
+    overflow-x: hidden;
+    width: 100%;
+    background-color: #ebe5e7;
+    z-index: 0;
+}
+
+footer {
+    align-content: center;
+    margin-top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: gray;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px; /* 배너 높이만큼 아래로 이동 */
+    background-color: #ebe5e7;
+    padding: 20px;
+    z-index: 0; /* 컨텐츠를 배너 아래로 이동 */
+    overflow-y: auto;
+}

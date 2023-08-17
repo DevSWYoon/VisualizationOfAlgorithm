@@ -29,7 +29,7 @@ function drawPoints() {
         drawPoint(points[i].x, points[i].y);
     }
 
-    convexHullPointsTextElement.innerHTML = "Points : " + "<br>" + points.map(p => `(${p.x.toFixed(3)}, ${p.y.toFixed(3)})`).join("<br>");
+    convexHullPointsTextElement.innerHTML = 'POINTS : <br>' + points.map(p => `(${p.x}, ${p.y})`).join(' -> <br>');
 }
 
 function addPoint() {
@@ -123,15 +123,17 @@ async function drawLinesByConvexHullAlgorithm() {
     drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[0].x, points[0].y);
 
     await delay();
-    convexHullTextElement.innerHTML = 'CONVEX HULL : <br>' + s.map(i => `(${points[i].x}, ${points[i].y})`).join(' -> ');
+    convexHullTextElement.innerHTML = 'CONVEX HULL (# of points - ' + s.length + ') : <br>' + s.map(i => `(${points[i].x}, ${points[i].y})`).join(' -> <br>');
 }
 
 function reset() {
     points = [];
     s = [];
     drawPoints();
-    ccwTextElement.innerText = 'CCW : ';
-    convexHullTextElement.innerText = 'CONVEX HULL : ';
+    clearCanvas();
+    ccwTextElement.innerHTML = 'CCW : UNDEFINED';
+    convexHullTextElement.innerHTML = 'CONVEX HULL : <br>UNDEFINED';
+    convexHullPointsTextElement.innerHTML = 'POINTS : <br>';
 }
 
 drawGrid('lightgray');

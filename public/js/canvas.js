@@ -1,5 +1,7 @@
 let delayTime = 50;
 
+const nodeRadius = 20;
+
 const canvas = document.getElementById('myCanvas');
 const delayTimeTextElement = document.getElementById("delayTimeInput");
 const ctx = canvas.getContext('2d');
@@ -59,34 +61,48 @@ function getDistance(p1, p2) {
 
 function drawLine(x1, y1, x2, y2, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
 }
 
+function drawNode(node, x, y, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
+    ctx.fill();
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 12px Arial";
+    ctx.fillText(node, x - 5, y + 5);
+}
+
 function drawArrow(x1, y1, x2, y2, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
+    ctx.lineWidth = 0.8;
 
     // 두 노드 사이의 거리 계산
     const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 
     // 끝점 좌표 계산
     const arrowLength = 10; // 화살표 길이
-    const endX = x2 - (arrowLength / distance) * (x2 - x1);
-    const endY = y2 - (arrowLength / distance) * (y2 - y1);
-
-    ctx.lineTo(endX, endY);
-    ctx.stroke();
 
     const dx = x2 - x1;
     const dy = y2 - y1;
     const angle = Math.atan2(dy, dx);
     const size = 10;
+
+    const begX= x1 + nodeRadius * Math.cos(angle);
+    const begY = y1 + nodeRadius * Math.sin(angle);
+    const endX = x2 - nodeRadius * Math.cos(angle);
+    const endY = y2 - nodeRadius * Math.sin(angle);
+
+    ctx.beginPath();
+    ctx.moveTo(begX, begY);
+    ctx.lineTo(endX, endY);
+    ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo(endX, endY);
@@ -99,9 +115,9 @@ function drawArrow(x1, y1, x2, y2, color = 'blue') {
     ctx.stroke();
 }
 
-function drawLoop(x, y, nodeRadius) {
-    ctx.strokeStyle = 'blue';
-    ctx.lineWidth = 1;
+function drawLoop(x, y, nodeRadius, color = 'blue') {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 0.8;
     ctx.beginPath();
     ctx.arc(x + nodeRadius * 1.5, y, nodeRadius * 1.5, 0, 2 * Math.PI);
     ctx.stroke();
@@ -115,5 +131,4 @@ function clearCanvas() {
     points = [];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid('lightgray');
-    ccwTextElement.innerHTML = 'CCW : UNDEFINED';
 }

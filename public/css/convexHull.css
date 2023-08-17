@@ -16,11 +16,12 @@
 }
 
 .convexHullText {
+    position: relative;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 10px;
-    max-width: 70%;
-    max-height: 20%;
+    max-width: 30%;
+    max-height: 10%;
     white-space: normal;
     overflow: auto;
 }

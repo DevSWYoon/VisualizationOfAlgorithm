@@ -3,33 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="convexHull.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/canvas.css">
+    <link rel="stylesheet" href="css/convexHull.css">
     <title>ConvexHull</title>
 </head>
 <body>
-    <header class="banner">
-        <h1>Visualizations of Algorithms</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="convexHull.html">Convex Hull</a></li>
-                <li><a href="graph.html">Graph Algorithms</a></li>
-                <!-- 추가 메뉴 아이템들... -->
-            </ul>
-        </nav>
-    </header>
+    <div class="header-container"></div>
 
     <div class="content-container">
         <div class="content">
         <div class="canvas-container">
-            <canvas id="myCanvas" width="800" height="600"></canvas>
+            <canvas id="myCanvas" width="2400" height="1800"></canvas>
             <div class="pointsText">POINTS : UNDEFINED</div>
         </div>
 
         <p id="ccwText">CCW : UNDEFINED</p>
         <div class="convexHullText">CONVEX HULL : UNDEFINED</div>
+
             <br>
             <div>
             <label for="xInput">X 좌표:</label>
@@ -48,17 +40,18 @@
             <button id="setDelayTime">설정</button>
             <br><br>
 
-            <button onclick="clearCanvas()">초기화</button>
+            <button onclick="reset()">초기화</button>
         </div>
         <br><br>
 
-        <script src = "canvas.js"></script>
-        <script src = "convexHull.js"></script>
+        <script src = "js/canvas.js"></script>
+        <script src = "js/convexHull.js"></script>
         </div>
     </div>
 
-    <footer>
-        <p>Copyright &copy; 2023 Seokwon Yoon</p>
-    </footer>
+    <div class="footer-container"></div>
+
+    <script src="js/header.js"></script>
+    <script src="js/footer.js"></script>
 </body>
 </html>
