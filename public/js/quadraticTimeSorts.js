@@ -1,10 +1,10 @@
 async function bubbleSort() {
     if(checkAndSetLock()) return;
 
-    let cmpCount = 0;
+    cmpCount = 0;
 
-    for(let i = 0; i < Array.length; ++i) {
-        for(let j = 0; j < Array.length - i - 1; ++j) {
+    for(let i = 0; i < array.length; ++i) {
+        for(let j = 0; j < array.length - i - 1; ++j) {
             await delay();
             if (!lock) return;
 
@@ -12,14 +12,14 @@ async function bubbleSort() {
             drawArrayByIndex(j + 1, 'blue');
 
             outputCmpCount(++cmpCount);
-            if(Array[j] > Array[j + 1]) {
+            if(array[j] > array[j + 1]) {
                 await delay();
                 drawArrayByIndex(j, 'red');
                 drawArrayByIndex(j + 1, 'red');
 
-                let temp = Array[j];
-                Array[j] = Array[j + 1];
-                Array[j + 1] = temp;
+                let temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
             }
 
             await delay();
@@ -33,13 +33,13 @@ async function bubbleSort() {
 async function selectionSort() {
     if(checkAndSetLock()) return;
 
-    let cmpCount = 0;
+    cmpCount = 0;
 
-    for(let i = 0; i < Array.length - 1; ++i) {
+    for(let i = 0; i < array.length - 1; ++i) {
         let minIdx = i;
 
         drawArrayByIndex(minIdx, 'green');
-        for(let j = i + 1; j < Array.length; ++j) {
+        for(let j = i + 1; j < array.length; ++j) {
             await delay();
             if(!lock) return;
 
@@ -48,7 +48,7 @@ async function selectionSort() {
             outputCmpCount(++cmpCount);
 
             await delay();
-            if(Array[minIdx] > Array[j]) {
+            if(array[minIdx] > array[j]) {
                 drawArrayByIndex(minIdx, 'red');
                 drawArrayByIndex(j, 'red');
                 await delay();
@@ -65,9 +65,9 @@ async function selectionSort() {
         drawArrayByIndex(i, 'red');
         drawArrayByIndex(minIdx, 'red');
 
-        let temp = Array[i];
-        Array[i] = Array[minIdx];
-        Array[minIdx] = temp;
+        let temp = array[i];
+        array[i] = array[minIdx];
+        array[minIdx] = temp;
 
         await delay();
         drawArray();
@@ -79,15 +79,15 @@ async function selectionSort() {
 async function insertionSort() {
     if(checkAndSetLock()) return;
 
-    let cmpCount = 0;
+    cmpCount = 0;
 
-    for(let i = 1; i < Array.length; ++i) {
+    for(let i = 1; i < array.length; ++i) {
         let j = i - 1;
-        let key = Array[i];
+        let key = array[i];
 
         drawArrayByIndex(i, 'green');
 
-        while(j >= 0 && Array[j] > key) {
+        while(j >= 0 && array[j] > key) {
             outputCmpCount(++cmpCount);
             await delay();
             if(!lock) return;
@@ -96,13 +96,13 @@ async function insertionSort() {
 
             await delay();
             drawArrayByIndex(j, 'black');
-            Array[j + 1] = Array[j];
+            array[j + 1] = array[j];
             --j;
         }
 
         await delay();
         drawArrayByIndex(j + 1, 'red');
-        Array[j + 1] = key;
+        array[j + 1] = key;
 
         await delay();
         drawArray();

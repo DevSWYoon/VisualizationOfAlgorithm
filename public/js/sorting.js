@@ -1,19 +1,32 @@
 const arrayValuesText = document.querySelector('.arrayValues');
 const cmpCountText = document.getElementById('cmpCount');
 
-let Array = [];
+let array = [];
 
 let barWidth = 0;
 let barHeightUnit = 0;
 
 let lock = false;
 
-function outputCmpCount(cmpCount) {
+let cmpCount = 0;
+
+function outputCmpCount() {
     cmpCountText.innerText = `COMP COUNT: ${cmpCount}`;
 }
 
 function outputArrayValues() {
-    arrayValuesText.innerHTML = 'Array : <br>' + Array.join('<br>');
+    arrayValuesText.innerHTML = 'Array : <br>' + array.join('<br>');
+}
+
+function shuffleArray() {
+    for (let i = 0; i < array.length; i++) {
+        const j = Math.floor(Math.random() * array.length);
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    drawArray();
 }
 
 function checkAndSetLock() {
@@ -24,13 +37,13 @@ function checkAndSetLock() {
 }
 
 function assignBarWidthAndHeightUnit() {
-    barWidth = canvas.width / Array.length;
-    barHeightUnit = canvas.height / Math.max(...Array);
+    barWidth = canvas.width / array.length;
+    barHeightUnit = canvas.height / Math.max(...array);
 }
 
 function drawArrayByIndex(i, color = 'black') {
     assignBarWidthAndHeightUnit();
-    drawRectangle(i * barWidth, canvas.height - Array[i] * barHeightUnit, barWidth, Array[i] * barHeightUnit, color);
+    drawRectangle(i * barWidth, canvas.height - array[i] * barHeightUnit, barWidth, array[i] * barHeightUnit, color);
 }
 
 function drawArray() {
@@ -40,8 +53,8 @@ function drawArray() {
     assignBarWidthAndHeightUnit();
     outputArrayValues();
 
-    for (let i = 0; i < Array.length; i++) {
-        const barHeight = Array[i] * barHeightUnit;
+    for (let i = 0; i < array.length; i++) {
+        const barHeight = array[i] * barHeightUnit;
         const x = i * barWidth;
         const y = canvas.height - barHeight;
 
@@ -51,7 +64,7 @@ function drawArray() {
 
 function generateRandomArray() {
     for (let i = 0; i < 10; i++) {
-        Array.push(Math.floor(Math.random() * canvas.height));
+        array.push(Math.floor(Math.random() * canvas.height));
     }
     drawArray();
 }
@@ -59,7 +72,7 @@ function generateRandomArray() {
 function addArrayValue() {
     const element = parseInt(document.getElementById('arrayValue').value);
     if (!isNaN(element)) {
-        Array.push(element);
+        array.push(element);
         drawArray();
     }
 }
@@ -67,7 +80,8 @@ function addArrayValue() {
 async function reset() {
     lock = false;
     await delay(delayTime * 10 + 1);
-    Array = [];
+    array = [];
+    cmpCount = 0;
     arrayValuesText.innerHTML = 'Array : <br>';
     cmpCountText.innerText = 'COMP COUNT: 0';
     drawArray();
