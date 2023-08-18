@@ -132,6 +132,11 @@ function drawPoint(x, y) {
     ctx.fill();
 }
 
+function drawRectangle(x, y, barWidth, barHeight, color = 'blue') {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, barWidth, barHeight);
+}
+
 function eraseLine() {
     drawPoints();
 }
