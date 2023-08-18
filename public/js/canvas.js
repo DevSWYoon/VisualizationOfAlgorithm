@@ -19,8 +19,8 @@ document.getElementById("setDelayTime").addEventListener("click", () => {
 function setDelayTime(inputDelayTime = delayTime) {
     delayTime = inputDelayTime;
 }
-async function delay() {
-    return new Promise(resolve => setTimeout(resolve, delayTime));
+async function delay(time = delayTime) {
+    return new Promise(resolve => setTimeout(resolve, time));
 }
 
 function coordinateText(p) {

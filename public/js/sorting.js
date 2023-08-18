@@ -51,7 +51,7 @@ function drawArray() {
 
 function generateRandomArray() {
     for (let i = 0; i < 10; i++) {
-        Array.push(Math.floor(Math.random() * 1000));
+        Array.push(Math.floor(Math.random() * canvas.height));
     }
     drawArray();
 }
@@ -66,7 +66,7 @@ function addArrayValue() {
 
 async function reset() {
     lock = false;
-    await delay(delayTime * 10);
+    await delay(delayTime * 10 + 1);
     Array = [];
     arrayValuesText.innerHTML = 'Array : <br>';
     cmpCountText.innerText = 'COMP COUNT: 0';
