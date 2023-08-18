@@ -14,13 +14,6 @@ function randomPoints() {
     drawPoints();
 }
 
-function drawPoint(x, y) {
-    ctx.fillStyle = 'red';
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-    ctx.fill();
-}
-
 function drawPoints() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid('lightgray');
@@ -29,7 +22,7 @@ function drawPoints() {
         drawPoint(points[i].x, points[i].y);
     }
 
-    convexHullPointsTextElement.innerHTML = 'POINTS : <br>' + points.map(p => `(${p.x}, ${p.y})`).join(' -> <br>');
+    convexHullPointsTextElement.innerHTML = 'POINTS : <br>' + points.map(p => `(${p.x}, ${p.y})`).join('<br>');
 }
 
 function addPoint() {
@@ -49,10 +42,6 @@ function addPoint() {
 
 function getCcw(p1, p2, p3) {
     return p1.x * p2.y + p2.x * p3.y + p3.x * p1.y - p1.y * p2.x - p2.y * p3.x - p3.y * p1.x
-}
-
-function drawLineWithDelay(x1, y1, x2, y2) {
-    drawLine(x1, y1, x2, y2);
 }
 
 function drawStackLines() {
@@ -89,17 +78,20 @@ async function drawLinesByConvexHullAlgorithm() {
     s.push(1);
 
     await delay();
-    drawLineWithDelay(points[0].x, points[0].y, points[1].x, points[1].y);
+    drawLine(points[0].x, points[0].y, points[1].x, points[1].y);
 
     for(let i = 2; i < points.length; i++) {
         await delay();
-        drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
+        drawLine(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
 
         while (s.length >= 1) {
             let ccw = getCcw(points[s[top - 1]], points[s[top]], points[i]);
             ccwTextElement.innerText = 'CCW : ' + ccw;
 
             if(ccw > 0) break;
+
+            await delay();
+            drawLine(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y, 'red');
 
             top--;
             s.pop();
@@ -108,19 +100,19 @@ async function drawLinesByConvexHullAlgorithm() {
             eraseLine();
             drawStackLines();
             await delay();
-            drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
+            drawLine(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
         }
 
 
         await delay();
-        drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
+        drawLine(points[s[top]].x, points[s[top]].y, points[i].x, points[i].y);
         s.push(i);
         top++;
     }
 
 
     await delay();
-    drawLineWithDelay(points[s[top]].x, points[s[top]].y, points[0].x, points[0].y);
+    drawLine(points[s[top]].x, points[s[top]].y, points[0].x, points[0].y);
 
     await delay();
     convexHullTextElement.innerHTML = 'CONVEX HULL (# of points - ' + s.length + ') : <br>' + s.map(i => `(${points[i].x}, ${points[i].y})`).join(' -> <br>');

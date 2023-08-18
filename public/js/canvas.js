@@ -1,6 +1,8 @@
 let delayTime = 50;
 
-const nodeRadius = 20;
+const pointRadius = 6;
+const nodeRadius = 40;
+const lineWidth = 2;
 
 const canvas = document.getElementById('myCanvas');
 const delayTimeTextElement = document.getElementById("delayTimeInput");
@@ -36,7 +38,7 @@ function drawGrid(color) {
 
     // 격자 선 스타일 설정
     ctx.strokeStyle = color;
-    ctx.lineWidth = 0.5;
+    ctx.lineWidth = 0.7;
 
     // 수평선 그리기
     for (let i = 0; i < numHorizontalLines; i++) {
@@ -61,7 +63,7 @@ function getDistance(p1, p2) {
 
 function drawLine(x1, y1, x2, y2, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = lineWidth;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -75,13 +77,13 @@ function drawNode(node, x, y, color) {
     ctx.fill();
 
     ctx.fillStyle = "white";
-    ctx.font = "bold 12px Arial";
-    ctx.fillText(node, x - 5, y + 5);
+    ctx.font = "24px Arial";
+    ctx.fillText(node, x - 10, y + 10);
 }
 
 function drawArrow(x1, y1, x2, y2, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth = lineWidth;
 
     // 두 노드 사이의 거리 계산
     const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
@@ -115,12 +117,19 @@ function drawArrow(x1, y1, x2, y2, color = 'blue') {
     ctx.stroke();
 }
 
-function drawLoop(x, y, nodeRadius, color = 'blue') {
+function drawLoop(x, y, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth = lineWidth;
     ctx.beginPath();
     ctx.arc(x + nodeRadius * 1.5, y, nodeRadius * 1.5, 0, 2 * Math.PI);
     ctx.stroke();
+}
+
+function drawPoint(x, y) {
+    ctx.fillStyle = 'red';
+    ctx.beginPath();
+    ctx.arc(x, y, pointRadius, 0, 2 * Math.PI);
+    ctx.fill();
 }
 
 function eraseLine() {

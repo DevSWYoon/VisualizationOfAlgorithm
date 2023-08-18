@@ -6,18 +6,20 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/canvas.css">
+    <link rel="stylesheet" href="css/DFSAndBFS.css">
+
     <title>DFS Visualization</title>
-    <style>
-        canvas {
-            border: 3px solid #000;
-        }
-    </style>
 </head>
 <body>
     <div class="header-container"></div>
 
     <div class="content-container">
-    <canvas id="myCanvas" width="1600" height="1200"></canvas>
+        <div class="canvas-container">
+            <canvas id="myCanvas" width="2400" height="1800"></canvas>
+            <div class="nodesText">NODES : UNDEFINED</div>
+        </div>
+        <p id="currentNodeText">CURRENT NODE : UNDEFINED</p>
+        <div class="orderOfVisitText">ORDER OF VISIT : UNDEFINED</div>
     <br>
     <div>
         <label for="parentNodeInput">Name of Parent Node:</label>
@@ -53,7 +55,7 @@
 
     <script src = "js/canvas.js"></script>
     <script src = "js/graph.js"></script>
-    <script src = "js/DFS.js"></script>
+    <script src = "js/DFSAndBFS.js"></script>
     </div>
 
     <div class="footer-container"></div>

@@ -1,13 +1,25 @@
+const nodesTextElement = document.querySelector('.nodesText');
+
 const parentTextElement = document.getElementById("parentNodeInput");
 const childTextElement = document.getElementById("childNodeInput");
 
 const parentCoordsTextElement = document.getElementById("parentCoordsInput");
 const childCoordsTextElement = document.getElementById("childCoordsInput");
 
+const currentNodeTextElement = document.getElementById("currentNodeText");
+
 let graph = {};
 let nodeCoords = {};
 
 let scale = 10;
+
+document.getElementById("resetButton").addEventListener("click", () => {
+    graph = {};
+    nodeCoords = {};
+    drawGraph();
+
+    console.log("resetGraph");
+});
 document.getElementById("addNodeButton").addEventListener("click", () => {
     const parent = parentTextElement.value;
     const child = childTextElement.value;
@@ -65,11 +77,14 @@ document.getElementById("randomNodesButton").addEventListener("click", () => {
     drawGraph();
 });
 
-document.getElementById("resetButton").addEventListener("click", () => {
-    graph = {};
-    nodeCoords = {};
-    drawGraph();
-});
+function outputNodesText() {
+    //output nodes & there's child nodes
+    let nodesText = "";
+    for(let node in graph) {
+        nodesText += `${node} : ${graph[node].join(", ")}<br>`;
+    }
+    nodesTextElement.innerHTML = "NODES : <br>" + nodesText;
+}
 
 function getRandomCoordinates() {
     const x = Math.floor(Math.random() * (canvas.width - 4 * nodeRadius)) + nodeRadius * 2;
@@ -101,13 +116,15 @@ function addNode(parent, child, isRandom = false) {
     } else if(!isRandom){
         alert("해당 노드를 추가할 수 없습니다.")
     }
+
+    outputNodesText();
 }
 
 function drawArrowBetweenNodes(node1, node2, node1Color, node2Color, arrowColor) {
     if(node1 !== node2) {
         drawArrow(nodeCoords[node1].x, nodeCoords[node1].y, nodeCoords[node2].x, nodeCoords[node2].y, arrowColor);
     } else {
-        drawLoop(nodeCoords[node1].x, nodeCoords[node1].y, nodeRadius, arrowColor);
+        drawLoop(nodeCoords[node1].x, nodeCoords[node1].y, arrowColor);
     }
     drawNode(node1, nodeCoords[node1].x, nodeCoords[node1].y, node1Color);
     drawNode(node2, nodeCoords[node2].x, nodeCoords[node2].y, node2Color);
@@ -126,7 +143,7 @@ function drawGraph() {
             if(node !== neighbor)
                 drawArrow(nodeCoords[node].x, nodeCoords[node].y, nodeCoords[neighbor].x, nodeCoords[neighbor].y);
             else
-                drawLoop(nodeCoords[node].x, nodeCoords[node].y, nodeRadius);
+                drawLoop(nodeCoords[node].x, nodeCoords[node].y);
         }
     }
 
