@@ -1,7 +1,6 @@
 async function bubbleSort() {
     if(checkAndSetLock()) return;
 
-    cmpCount = 0;
 
     for(let i = 0; i < array.length; ++i) {
         for(let j = 0; j < array.length - i - 1; ++j) {
@@ -32,8 +31,6 @@ async function bubbleSort() {
 
 async function selectionSort() {
     if(checkAndSetLock()) return;
-
-    cmpCount = 0;
 
     for(let i = 0; i < array.length - 1; ++i) {
         let minIdx = i;
@@ -79,16 +76,16 @@ async function selectionSort() {
 async function insertionSort() {
     if(checkAndSetLock()) return;
 
-    cmpCount = 0;
-
     for(let i = 1; i < array.length; ++i) {
         let j = i - 1;
         let key = array[i];
 
         drawArrayByIndex(i, 'green');
 
-        while(j >= 0 && array[j] > key) {
+        while(true) {
             outputCmpCount(++cmpCount);
+            if(j < 0 || array[i] <= key) break;
+
             await delay();
             if(!lock) return;
 

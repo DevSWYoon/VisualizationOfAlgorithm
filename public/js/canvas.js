@@ -84,7 +84,7 @@ function drawLine(x1, y1, x2, y2, color = 'blue') {
 
 function drawVerticalLine(y, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = lineWidth;
+    ctx.lineWidth = lineWidth * 2;
     ctx.beginPath();
     ctx.moveTo(0, canvas.height - y);
     ctx.lineTo(canvas.width, canvas.height - y);

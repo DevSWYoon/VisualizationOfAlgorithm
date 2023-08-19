@@ -1,8 +1,6 @@
 document.getElementById("mergeSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
-    cmpCount = 0;
-
     mergeSort(0, array.length).then(() => {
         drawArray();
         lock = false;
@@ -11,8 +9,6 @@ document.getElementById("mergeSort").addEventListener("click", () => {
 
 document.getElementById("quickSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
-
-    cmpCount = 0;
 
     quickSort(0, array.length).then(() => {
         drawArray();
@@ -86,49 +82,32 @@ async function quickSort(left, right) {
     drawArrayByIndex(mid, 'yellow');
     drawVerticalLine(array[mid] * barHeightUnit, 'yellow');
 
-    let i = left;
-    let j = right - 1;
     let t_left = left, t_right = right - 1;
 
-    while(i < mid) {
+    for(let i = left; i < right; ++i) {
+        if(i === mid) continue;
+
         if(!lock) return;
         await delay();
-
         outputCmpCount(++cmpCount);
 
         if(array[i] < array[mid]) {
             drawArrayByIndex(i, 'blue');
-            temp[t_left++] = array[i++];
+            temp[t_left++] = array[i];
         } else {
             drawArrayByIndex(i, 'red');
-            temp[t_right--] = array[i++];
+            temp[t_right--] = array[i];
         }
     }
 
-    while(j >= mid) {
-        if(!lock) return;
-        await delay();
-
-        outputCmpCount(++cmpCount);
-
-        if(array[j] < array[mid]) {
-            drawArrayByIndex(j, 'blue');
-            temp[t_left++] = array[j--];
-        } else {
-            drawArrayByIndex(j, 'red');
-            temp[t_right--] = array[j--];
-        }
-    }
+    temp[t_right] = array[mid];
 
     for(let i = left; i < right; ++i) {
         array[i] = temp[i];
     }
 
-    await delay();
     await drawArrayByIndexRange(left, right, 'lightgreen');
 
-    t_left = t_left === left ? t_left + 1 : t_left;
-
     await quickSort(left, t_left);
-    await quickSort(t_left, right);
+    await quickSort(t_right + 1, right);
 }

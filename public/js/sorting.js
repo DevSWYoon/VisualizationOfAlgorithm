@@ -67,6 +67,7 @@ async function shuffleArray() {
 function checkAndSetLock() {
     if (lock) return true;
 
+    outputCmpCount(cmpCount = 0);
     lock = true;
     return false;
 }
