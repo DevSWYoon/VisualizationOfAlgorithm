@@ -1,4 +1,4 @@
-let delayTime = 50;
+let delayTime = 10;
 
 const pointRadius = 6;
 const nodeRadius = 40;
@@ -16,6 +16,18 @@ document.getElementById("setDelayTime").addEventListener("click", () => {
     alert(`딜레이 시간이 ${delayTime}ms로 설정되었습니다.`);
     delayTimeTextElement.value = "";
 });
+
+delayTimeTextElement.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        const delayTime = delayTimeTextElement.value;
+
+        setDelayTime(delayTime);
+
+        alert(`딜레이 시간이 ${delayTime}ms로 설정되었습니다.`);
+        delayTimeTextElement.value = "";
+    }
+});
+
 function setDelayTime(inputDelayTime = delayTime) {
     delayTime = inputDelayTime;
 }
@@ -63,10 +75,19 @@ function getDistance(p1, p2) {
 
 function drawLine(x1, y1, x2, y2, color = 'blue') {
     ctx.strokeStyle = color;
-    ctx.lineWidth = lineWidth;
+    ctx.lineWidth = lineWidth * 2;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
+    ctx.stroke();
+}
+
+function drawVerticalLine(y, color = 'blue') {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height - y);
+    ctx.lineTo(canvas.width, canvas.height - y);
     ctx.stroke();
 }
 

@@ -73,7 +73,7 @@ async function merge(left, mid, right) {
         array[i] = temp[i];
     }
 
-    drawArray();
+    await drawArrayByIndexRange(left, right, 'lightgreen');
 }
 
 async function quickSort(left, right) {
@@ -83,50 +83,52 @@ async function quickSort(left, right) {
 
     const mid = Math.floor((left + right) / 2);
 
-    await delay();
-    drawArrayByIndex(mid, 'lightgreen');
+    drawArrayByIndex(mid, 'yellow');
+    drawVerticalLine(array[mid] * barHeightUnit, 'yellow');
 
     let i = left;
     let j = right - 1;
-    let k = left;
-
-    while(i < mid && j >= mid) {
-        if(!lock) return;
-
-        outputCmpCount(++cmpCount);
-        if(array[i] < array[mid]) {
-            await delay();
-            drawArrayByIndex(i, 'blue');
-            temp[k++] = array[i++];
-        } else {
-            await delay();
-            if(j !== mid) drawArrayByIndex(j, 'red');
-            temp[k++] = array[j--];
-        }
-    }
+    let t_left = left, t_right = right - 1;
 
     while(i < mid) {
         if(!lock) return;
-
         await delay();
-        drawArrayByIndex(i, 'blue');
-        temp[k++] = array[i++];
+
+        outputCmpCount(++cmpCount);
+
+        if(array[i] < array[mid]) {
+            drawArrayByIndex(i, 'blue');
+            temp[t_left++] = array[i++];
+        } else {
+            drawArrayByIndex(i, 'red');
+            temp[t_right--] = array[i++];
+        }
     }
 
     while(j >= mid) {
         if(!lock) return;
-
         await delay();
-        drawArrayByIndex(j, 'red');
-        temp[k++] = array[j--];
+
+        outputCmpCount(++cmpCount);
+
+        if(array[j] < array[mid]) {
+            drawArrayByIndex(j, 'blue');
+            temp[t_left++] = array[j--];
+        } else {
+            drawArrayByIndex(j, 'red');
+            temp[t_right--] = array[j--];
+        }
     }
 
     for(let i = left; i < right; ++i) {
         array[i] = temp[i];
     }
 
-    drawArray();
+    await delay();
+    await drawArrayByIndexRange(left, right, 'lightgreen');
 
-    await quickSort(left, mid);
-    await quickSort(mid, right);
+    t_left = t_left === left ? t_left + 1 : t_left;
+
+    await quickSort(left, t_left);
+    await quickSort(t_left, right);
 }
