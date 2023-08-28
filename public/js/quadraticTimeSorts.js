@@ -84,7 +84,7 @@ async function insertionSort() {
 
         while(true) {
             outputCmpCount(++cmpCount);
-            if(j < 0 || array[i] <= key) break;
+            if(j < 0 || array[j] <= key) break;
 
             await delay();
             if(!lock) return;
@@ -92,8 +92,9 @@ async function insertionSort() {
             drawArrayByIndex(j, 'blue');
 
             await delay();
-            drawArrayByIndex(j, 'black');
             array[j + 1] = array[j];
+            drawArrayByIndex(j, 'black');
+            drawArrayByIndex(j + 1, 'black');
             --j;
         }
 

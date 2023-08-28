@@ -47,7 +47,7 @@ function outputCmpCount() {
 }
 
 function outputArrayValues() {
-    arrayValuesText.innerHTML = 'Array : <br>' + array.join('<br>');
+    arrayValuesText.innerHTML = 'Array (# of elements - ' + array.length + ') : <br>' + array.join('<br>');
 }
 
 async function shuffleArray() {
@@ -83,6 +83,8 @@ function drawArrayByIndex(i, color = 'black') {
 }
 
 async function drawArrayByIndexRange(left, right, color = 'black') {
+    outputArrayValues();
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid('lightgray');
 
