@@ -82,18 +82,21 @@ function drawArrayByIndex(i, color = 'black') {
     drawRectangle(i * barWidth, canvas.height - array[i] * barHeightUnit, barWidth, array[i] * barHeightUnit, color);
 }
 
-async function drawArrayByIndexRange(left, right, color = 'black') {
+async function drawArrayByIndexRangeWithDelay(left, right, pivot, color = 'black') {
     outputArrayValues();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid('lightgray');
+
+    if(pivot >= 0)
+        drawVerticalLine(pivot * barHeightUnit, 'yellow');
 
     for(let i = 0; i < left; ++i) {
         const barHeight = array[i] * barHeightUnit;
         const x = i * barWidth;
         const y = canvas.height - barHeight;
 
-        drawRectangle(x, y, barWidth, barHeight, 'black');
+        drawRectangle(x, y, barWidth, barHeight, color);
     }
 
     for(let i = right; i < array.length; ++i) {
@@ -101,7 +104,7 @@ async function drawArrayByIndexRange(left, right, color = 'black') {
         const x = i * barWidth;
         const y = canvas.height - barHeight;
 
-        drawRectangle(x, y, barWidth, barHeight, 'black');
+        drawRectangle(x, y, barWidth, barHeight, color);
     }
 
     for(let i = left; i < right; ++i) {
@@ -111,17 +114,20 @@ async function drawArrayByIndexRange(left, right, color = 'black') {
 
         if(!lock) return;
         await delay();
-        drawRectangle(x, y, barWidth, barHeight, color);
-    }
 
-    for(let i = left; i < right; ++i) {
-        const barHeight = array[i] * barHeightUnit;
-        const x = i * barWidth;
-        const y = canvas.height - barHeight;
+        if(pivot < 0) {
+            drawRectangle(x, y, barWidth, barHeight, 'lightgreen');
+            continue;
+        }
 
-        drawRectangle(x, y, barWidth, barHeight, 'black');
+        if(array[i] <= pivot) {
+            drawRectangle(x, y, barWidth, barHeight, 'blue');
+        } else {
+            drawRectangle(x, y, barWidth, barHeight, 'red');
+        }
     }
 }
+
 
 function drawArray() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -139,6 +145,38 @@ function drawArray() {
     }
 }
 
+
+function getMiddleValue(left, mid, right) {
+    if (array[left] > array[right]) {
+        if (array[mid] > array[right]) {
+            return array[mid] > array[left] ? array[left] : array[mid];
+        } else {
+            return array[right];
+        }
+    } else {
+        if (array[mid] > array[left]) {
+            return array[mid] > array[right] ? array[right] : array[mid];
+        } else {
+            return array[left];
+        }
+    }
+}
+
+function getMiddleIndex(left, mid, right) {
+    if (array[left] > array[right]) {
+        if (array[mid] > array[right]) {
+            return array[mid] > array[left] ? left : mid;
+        } else {
+            return right;
+        }
+    } else {
+        if (array[mid] > array[left]) {
+            return array[mid] > array[right] ? right : mid;
+        } else {
+            return left;
+        }
+    }
+}
 
 
 drawGrid('lightgray');

@@ -1,4 +1,4 @@
-let delayTime = 10;
+let delayTime = 5;
 
 const pointRadius = 6;
 const nodeRadius = 40;
@@ -32,6 +32,8 @@ function setDelayTime(inputDelayTime = delayTime) {
     delayTime = inputDelayTime;
 }
 async function delay(time = delayTime) {
+    if(time === 0) return;
+
     return new Promise(resolve => setTimeout(resolve, time));
 }
 

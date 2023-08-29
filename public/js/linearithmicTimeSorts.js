@@ -16,6 +16,15 @@ document.getElementById("quickSort").addEventListener("click", () => {
     });
 });
 
+document.getElementById("3-pivotQuickSort").addEventListener("click", () => {
+    if(checkAndSetLock()) return;
+
+    quickSort(0, array.length, true).then(() => {
+        drawArray();
+        lock = false;
+    });
+});
+
 async function mergeSort(left, right) {
     if(right - left <= 1 || !lock) return;
 
@@ -38,12 +47,12 @@ async function merge(left, mid, right) {
         if(!lock) return;
 
         outputCmpCount(++cmpCount);
+        await delay();
+
         if(array[i] < array[j]) {
-            await delay();
             drawArrayByIndex(i, 'blue');
             temp[k++] = array[i++];
         } else {
-            await delay();
             drawArrayByIndex(j, 'red');
             temp[k++] = array[j++];
         }
@@ -69,18 +78,19 @@ async function merge(left, mid, right) {
         array[i] = temp[i];
     }
 
-    await drawArrayByIndexRange(left, right, 'lightgreen');
+    await drawArrayByIndexRangeWithDelay(left, right, -1);
+    drawArray();
 }
 
-async function quickSort(left, right) {
+async function quickSort(left, right, isThreePivot = false) {
     if(right - left <= 1) return;
 
     let temp = new Array(array.length);
 
     const mid = Math.floor((left + right) / 2);
+    const pivot = isThreePivot ? getMiddleValue(left, mid, right - 1) : array[mid];
 
-    drawArrayByIndex(mid, 'yellow');
-    drawVerticalLine(array[mid] * barHeightUnit, 'yellow');
+    drawVerticalLine(pivot * barHeightUnit, 'yellow');
 
     let t_left = left, t_right = right - 1;
 
@@ -91,7 +101,7 @@ async function quickSort(left, right) {
         await delay();
         outputCmpCount(++cmpCount);
 
-        if(array[i] < array[mid]) {
+        if(array[i] < pivot) {
             drawArrayByIndex(i, 'blue');
             temp[t_left++] = array[i];
         } else {
@@ -100,13 +110,14 @@ async function quickSort(left, right) {
         }
     }
 
-    temp[t_right] = array[mid];
+    temp[t_right] = pivot;
 
     for(let i = left; i < right; ++i) {
         array[i] = temp[i];
     }
 
-    await drawArrayByIndexRange(left, right, 'lightgreen');
+    await drawArrayByIndexRangeWithDelay(left, right, pivot);
+    drawArray();
 
     await quickSort(left, t_left);
     await quickSort(t_right + 1, right);
