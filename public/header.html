@@ -1,13 +1,25 @@
 <header class="banner">
+    <link rel="stylesheet" href="./css/menu.css">
+
     <h1>Visualization of Algorithm</h1>
-    <nav>
+    <button id="menuToggle">Toggle Menu</button>
+    <nav class="menu">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="sorting.html">Sorting Algorithms</a></li>
             <li><a href="DFSAndBFS.html">Graph Algorithms</a></li>
             <li><a href="convexHull.html">Convex Hull</a></li>
-                <!-- 추가 메뉴 아이템들... -->
+
         </ul>
     </nav>
+
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const menu = document.querySelector(".menu");
+
+        menuToggle.addEventListener("click", () => {
+            menu.classList.toggle("active");
+        });
+    </script>
 </header>

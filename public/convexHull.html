@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/canvas.css">
     <link rel="stylesheet" href="css/convexHull.css">
+    <link rel="stylesheet" href="./css/menu.css">
     <title>ConvexHull</title>
 </head>
 <body>
@@ -24,23 +25,22 @@
 
             <br>
             <div>
-            <label for="xInput">X 좌표:</label>
-            <input type="number" id="xInput">
-            <label for="yInput">Y 좌표:</label>
-            <input type="number" id="yInput">
-            <button onclick="addPoint()">점 추가</button>
-            <button onclick="drawLinesByConvexHullAlgorithm()">선 그리기</button>
+                <label for="xInput">X Coord:</label>
+                <input type="number" id="xInput">
+                <label for="yInput">Y Coord:</label>
+                <input type="number" id="yInput">
+                <button onclick="addPoint()">Add Point</button>
+                <button onclick="randomPoints()">Add Random Points</button>
                 <br>
-            <button onclick="randomPoints()">랜덤 점 추가</button>
+                <button onclick="drawLinesByConvexHullAlgorithm()">Find Convex-Hull</button>
 
-            <br><br>
-
-            <label for="delayTimeInput">딜레이 시간(ms):</label>
+                <br><br>
+            <label for="delayTimeInput">DelayTime(ms):</label>
             <input type="number" id="delayTimeInput">
-            <button id="setDelayTime">설정</button>
+            <button id="setDelayTime">Set</button>
             <br><br>
 
-            <button onclick="reset()">초기화</button>
+            <button onclick="reset()">Reset</button>
         </div>
         <br><br>
 
