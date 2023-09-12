@@ -1,7 +1,38 @@
-async function bubbleSort() {
+document.getElementById("bubbleSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Bubble Sort";
 
+    bubbleSort().then(() => {
+        drawArray();
+        lock = false;
+    });
+});
+
+document.getElementById("selectionSort").addEventListener("click", () => {
+    if(checkAndSetLock()) return;
+
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Selection Sort";
+
+
+    selectionSort().then(() => {
+        drawArray();
+        lock = false;
+    });
+});
+
+document.getElementById("insertionSort").addEventListener("click", () => {
+    if(checkAndSetLock()) return;
+
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Insertion Sort";
+
+    insertionSort().then(() => {
+        drawArray();
+        lock = false;
+    });
+});
+
+async function bubbleSort() {
     for(let i = 0; i < array.length; ++i) {
         for(let j = 0; j < array.length - i - 1; ++j) {
             await delay();
@@ -30,8 +61,6 @@ async function bubbleSort() {
 }
 
 async function selectionSort() {
-    if(checkAndSetLock()) return;
-
     for(let i = 0; i < array.length - 1; ++i) {
         let minIdx = i;
 
@@ -74,8 +103,6 @@ async function selectionSort() {
 }
 
 async function insertionSort() {
-    if(checkAndSetLock()) return;
-
     for(let i = 1; i < array.length; ++i) {
         let j = i - 1;
         let key = array[i];

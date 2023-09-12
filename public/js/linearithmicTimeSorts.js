@@ -1,6 +1,8 @@
 document.getElementById("mergeSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Merge Sort";
+
     mergeSort(0, array.length).then(() => {
         drawArray();
         lock = false;
@@ -10,6 +12,8 @@ document.getElementById("mergeSort").addEventListener("click", () => {
 document.getElementById("quickSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Quick Sort";
+
     quickSort(0, array.length).then(() => {
         drawArray();
         lock = false;
@@ -18,6 +22,8 @@ document.getElementById("quickSort").addEventListener("click", () => {
 
 document.getElementById("3-pivotQuickSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
+
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : 3-Pivot Quick Sort";
 
     quickSort(0, array.length, true).then(() => {
         drawArray();

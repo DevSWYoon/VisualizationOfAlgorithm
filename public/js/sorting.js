@@ -14,6 +14,7 @@ let cmpCount = 0;
 document.getElementById("shuffle").addEventListener("click", () => {
     shuffleArray().then(r => {
         document.getElementById("cmpCount").innerText = "COMP COUNT : UNDEFINED";
+        document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : UNDEFINED";
     });
 });
 arrayValueInput.addEventListener("keyup", (event) => {
@@ -47,6 +48,7 @@ function outputArrayValues() {
 
 async function shuffleArray() {
     lock = false;
+    isPaused = false;
     await delay(delayTime * 10 + 1);
 
     for (let i = 0; i < array.length; i++) {
@@ -193,6 +195,7 @@ async function reset() {
     array = [];
     cmpCount = 0;
     arrayValuesText.innerHTML = 'Array : <br>';
+    document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : UNDEFINED";
     cmpCountText.innerText = 'COMP COUNT: 0';
     drawArray();
 }
