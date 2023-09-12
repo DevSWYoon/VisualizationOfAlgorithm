@@ -1,5 +1,7 @@
 let delayTime = 5;
 
+let isPause = false;
+
 const pointRadius = 6;
 const nodeRadius = 40;
 const lineWidth = 2;
@@ -28,13 +30,45 @@ delayTimeTextElement.addEventListener("keyup", (event) => {
     }
 });
 
+document.getElementById("setPause").addEventListener("click", () => {
+    if(!isPause) {
+        // setPause 의 텍스트를 재개로 변경
+        document.getElementById("setPause").innerText = "Resume";
+    } else {
+        // setPause 의 텍스트를 일시정지로 변경
+        document.getElementById("setPause").innerText = "Pause";
+    }
+
+    setPause();
+});
+
 function setDelayTime(inputDelayTime = delayTime) {
     delayTime = inputDelayTime;
 }
+
+function setPause() {
+    isPause = !isPause;
+}
+
 async function delay(time = delayTime) {
     if(time === 0) return;
 
+    if(isPause) {
+        await pause();
+    }
+
     return new Promise(resolve => setTimeout(resolve, time));
+}
+
+async function pause() {
+    return new Promise(resolve => {
+        const interval = setInterval(() => {
+            if(!isPause) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 10);
+    });
 }
 
 function coordinateText(p) {

@@ -11,6 +11,11 @@ let lock = false;
 
 let cmpCount = 0;
 
+document.getElementById("shuffle").addEventListener("click", () => {
+    shuffleArray().then(r => {
+        document.getElementById("cmpCount").innerText = "COMP COUNT : UNDEFINED";
+    });
+});
 arrayValueInput.addEventListener("keyup", (event) => {
     if (event.key === "Enter") {
         addArrayValue();
@@ -107,6 +112,8 @@ async function drawArrayByIndexRangeWithDelay(left, right, pivot, color = 'black
         drawRectangle(x, y, barWidth, barHeight, color);
     }
 
+    drawVerticalLine(pivot * barHeightUnit, 'yellow');
+
     for(let i = left; i < right; ++i) {
         const barHeight = array[i] * barHeightUnit;
         const x = i * barWidth;
@@ -125,6 +132,7 @@ async function drawArrayByIndexRangeWithDelay(left, right, pivot, color = 'black
         } else {
             drawRectangle(x, y, barWidth, barHeight, 'red');
         }
+        drawVerticalLine(pivot * barHeightUnit, 'yellow');
     }
 }
 

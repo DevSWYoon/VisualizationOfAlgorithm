@@ -90,8 +90,6 @@ async function quickSort(left, right, isThreePivot = false) {
     const mid = Math.floor((left + right) / 2);
     const pivot = isThreePivot ? getMiddleValue(left, mid, right - 1) : array[mid];
 
-    drawVerticalLine(pivot * barHeightUnit, 'yellow');
-
     let t_left = left, t_right = right - 1;
 
     for(let i = left; i < right; ++i) {
@@ -108,6 +106,8 @@ async function quickSort(left, right, isThreePivot = false) {
             drawArrayByIndex(i, 'red');
             temp[t_right--] = array[i];
         }
+
+        drawVerticalLine(pivot * barHeightUnit, 'yellow');
     }
 
     temp[t_right] = pivot;

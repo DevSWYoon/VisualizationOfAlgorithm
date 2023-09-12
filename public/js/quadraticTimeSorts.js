@@ -7,13 +7,13 @@ async function bubbleSort() {
             await delay();
             if (!lock) return;
 
-            drawArrayByIndex(j, 'blue');
+            drawArrayByIndex(j, 'yellow');
             drawArrayByIndex(j + 1, 'blue');
 
             outputCmpCount(++cmpCount);
             if(array[j] > array[j + 1]) {
                 await delay();
-                drawArrayByIndex(j, 'red');
+                drawArrayByIndex(j, 'blue');
                 drawArrayByIndex(j + 1, 'red');
 
                 let temp = array[j];
@@ -40,7 +40,7 @@ async function selectionSort() {
             await delay();
             if(!lock) return;
 
-            drawArrayByIndex(j, 'blue');
+            drawArrayByIndex(j, 'yellow');
 
             outputCmpCount(++cmpCount);
 
@@ -51,7 +51,7 @@ async function selectionSort() {
                 await delay();
 
                 drawArrayByIndex(minIdx, 'black');
-                drawArrayByIndex(j, 'green');
+                drawArrayByIndex(j, 'blue');
                 minIdx = j;
             } else {
                 drawArrayByIndex(j, 'black');
@@ -80,7 +80,7 @@ async function insertionSort() {
         let j = i - 1;
         let key = array[i];
 
-        drawArrayByIndex(i, 'green');
+        drawArrayByIndex(i, 'red');
 
         while(true) {
             outputCmpCount(++cmpCount);
@@ -89,7 +89,7 @@ async function insertionSort() {
             await delay();
             if(!lock) return;
 
-            drawArrayByIndex(j, 'blue');
+            drawArrayByIndex(j, 'yellow');
 
             await delay();
             array[j + 1] = array[j];
