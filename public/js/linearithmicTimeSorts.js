@@ -88,7 +88,7 @@ async function quickSort(left, right, isThreePivot = false) {
     let temp = new Array(array.length);
 
     const mid = Math.floor((left + right) / 2);
-    const pivot = isThreePivot ? getMiddleValue(left, mid, right - 1) : array[mid];
+    const pivot = isThreePivot ? getAverageOfThree(left, mid, right - 1) : array[mid];
 
     let t_left = left, t_right = right - 1;
 

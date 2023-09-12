@@ -1,6 +1,6 @@
 let delayTime = 5;
 
-let isPause = false;
+let isPaused = false;
 
 const pointRadius = 6;
 const nodeRadius = 40;
@@ -31,7 +31,7 @@ delayTimeTextElement.addEventListener("keyup", (event) => {
 });
 
 document.getElementById("setPause").addEventListener("click", () => {
-    if(!isPause) {
+    if(!isPaused) {
         // setPause 의 텍스트를 재개로 변경
         document.getElementById("setPause").innerText = "Resume";
     } else {
@@ -47,13 +47,13 @@ function setDelayTime(inputDelayTime = delayTime) {
 }
 
 function setPause() {
-    isPause = !isPause;
+    isPaused = !isPaused;
 }
 
 async function delay(time = delayTime) {
     if(time === 0) return;
 
-    if(isPause) {
+    if(isPaused) {
         await pause();
     }
 
@@ -63,7 +63,7 @@ async function delay(time = delayTime) {
 async function pause() {
     return new Promise(resolve => {
         const interval = setInterval(() => {
-            if(!isPause) {
+            if(!isPaused) {
                 clearInterval(interval);
                 resolve();
             }

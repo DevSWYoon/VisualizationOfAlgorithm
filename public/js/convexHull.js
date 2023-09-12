@@ -119,6 +119,7 @@ async function drawLinesByConvexHullAlgorithm() {
 }
 
 function reset() {
+    isPaused = false;
     points = [];
     s = [];
     drawPoints();

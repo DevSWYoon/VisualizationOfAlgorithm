@@ -14,6 +14,7 @@ let nodeCoords = {};
 let scale = 10;
 
 document.getElementById("resetButton").addEventListener("click", () => {
+    isPaused = false;
     graph = {};
     nodeCoords = {};
     drawGraph();

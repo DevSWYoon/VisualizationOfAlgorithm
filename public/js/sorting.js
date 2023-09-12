@@ -37,16 +37,6 @@ function addArrayValue() {
     }
 }
 
-async function reset() {
-    lock = false;
-    await delay(delayTime * 10 + 1);
-    array = [];
-    cmpCount = 0;
-    arrayValuesText.innerHTML = 'Array : <br>';
-    cmpCountText.innerText = 'COMP COUNT: 0';
-    drawArray();
-}
-
 function outputCmpCount() {
     cmpCountText.innerText = `COMP COUNT: ${cmpCount}`;
 }
@@ -127,7 +117,7 @@ async function drawArrayByIndexRangeWithDelay(left, right, pivot, color = 'black
             continue;
         }
 
-        if(array[i] <= pivot) {
+        if(array[i] < pivot) {
             drawRectangle(x, y, barWidth, barHeight, 'blue');
         } else {
             drawRectangle(x, y, barWidth, barHeight, 'red');
@@ -184,6 +174,27 @@ function getMiddleIndex(left, mid, right) {
             return left;
         }
     }
+}
+
+function getAverageOfThree(left, mid, right) {
+    if(left === mid && mid === right) return array[left];
+
+    if(left === mid) return (array[left] + array[right]) / 2;
+
+    if(mid === right) return (array[left] + array[mid]) / 2;
+
+    return (array[left] + array[mid] + array[right]) / 3;
+}
+
+async function reset() {
+    isPaused = false;
+    lock = false;
+    await delay(delayTime * 10 + 1);
+    array = [];
+    cmpCount = 0;
+    arrayValuesText.innerHTML = 'Array : <br>';
+    cmpCountText.innerText = 'COMP COUNT: 0';
+    drawArray();
 }
 
 
