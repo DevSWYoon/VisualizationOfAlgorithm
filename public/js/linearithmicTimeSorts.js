@@ -1,33 +1,42 @@
 document.getElementById("mergeSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
+    console.time('mergeSort');
+
     document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Merge Sort";
 
     mergeSort(0, array.length).then(() => {
         drawArray();
         lock = false;
+        console.timeEnd('mergeSort');
     });
 });
 
 document.getElementById("quickSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
+    console.time('quickSort');
+
     document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : Quick Sort";
 
     quickSort(0, array.length).then(() => {
         drawArray();
         lock = false;
+        console.timeEnd('quickSort');
     });
 });
 
 document.getElementById("3-pivotQuickSort").addEventListener("click", () => {
     if(checkAndSetLock()) return;
 
+    console.time('3-pivotQuickSort');
+
     document.getElementById("nameOfAlgorithm").innerText = "ALGORITHM IN USE : 3-Pivot Quick Sort";
 
     quickSort(0, array.length, true).then(() => {
         drawArray();
         lock = false;
+        console.timeEnd('3-pivotQuickSort');
     });
 });
 
