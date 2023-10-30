@@ -62,13 +62,12 @@ async function merge(left, mid, right) {
         if(!lock) return;
 
         outputCmpCount(++cmpCount);
-        await delay();
 
         if(array[i] < array[j]) {
-            drawArrayByIndex(i, 'blue');
+            await drawArrayByIndexWithDelay(i, 'blue');
             temp[k++] = array[i++];
         } else {
-            drawArrayByIndex(j, 'red');
+            await drawArrayByIndexWithDelay(j, 'red');
             temp[k++] = array[j++];
         }
     }
@@ -76,16 +75,14 @@ async function merge(left, mid, right) {
     while(i < mid) {
         if(!lock) return;
 
-        await delay();
-        drawArrayByIndex(i, 'blue');
+        await drawArrayByIndexWithDelay(i, 'blue');
         temp[k++] = array[i++];
     }
 
     while(j < right) {
         if(!lock) return;
 
-        await delay();
-        drawArrayByIndex(j, 'red');
+        await drawArrayByIndexWithDelay(j, 'red');
         temp[k++] = array[j++];
     }
 
@@ -94,7 +91,7 @@ async function merge(left, mid, right) {
     }
 
     await drawArrayByIndexRangeWithDelay(left, right, -1);
-    drawArray();
+    drawArrayByIndexRange(left, right, -1);
 }
 
 async function quickSort(left, right, isThreePivot = false) {
@@ -111,16 +108,17 @@ async function quickSort(left, right, isThreePivot = false) {
         if(i === mid) continue;
 
         if(!lock) return;
-        await delay();
         outputCmpCount(++cmpCount);
 
         if(array[i] < pivot) {
-            drawArrayByIndex(i, 'blue');
+            await drawArrayByIndexWithDelay(i, 'blue');
             temp[t_left++] = array[i];
         } else {
-            drawArrayByIndex(i, 'red');
+            await drawArrayByIndexWithDelay(i, 'red');
             temp[t_right--] = array[i];
         }
+
+        if (delayTime < 0) continue;
 
         drawVerticalLine(pivot * barHeightUnit, 'yellow');
     }
@@ -132,7 +130,7 @@ async function quickSort(left, right, isThreePivot = false) {
     }
 
     await drawArrayByIndexRangeWithDelay(left, right, pivot);
-    drawArray();
+    drawArrayByIndexRange(0, array.length, pivot);
 
     await quickSort(left, t_left);
     await quickSort(t_right + 1, right);

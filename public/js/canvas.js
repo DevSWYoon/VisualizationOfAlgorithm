@@ -10,6 +10,10 @@ const canvas = document.getElementById('myCanvas');
 const delayTimeTextElement = document.getElementById("delayTimeInput");
 const ctx = canvas.getContext('2d');
 
+async function conditionalDelay(time = delayTime) {
+    if(time >= 0) await delay(time);
+}
+
 document.getElementById("setDelayTime").addEventListener("click", () => {
     const delayTime = delayTimeTextElement.value;
 
@@ -51,11 +55,8 @@ function setPause() {
 }
 
 async function delay(time = delayTime) {
-    if(time === 0) return;
-
-    if(isPaused) {
+    if(isPaused)
         await pause();
-    }
 
     return new Promise(resolve => setTimeout(resolve, time));
 }
@@ -101,6 +102,33 @@ function drawGrid(color) {
         ctx.beginPath();
         ctx.moveTo(i * cellSize, 0);
         ctx.lineTo(i * cellSize, canvasHeight);
+        ctx.stroke();
+    }
+}
+
+function drawPartialGrid(x, y, width, height, color) {
+    // 격자의 크기 설정
+    const cellSize = 20;
+    const numHorizontalLines = Math.floor(height / cellSize);
+    const numVerticalLines = Math.floor(width / cellSize);
+
+    // 격자 선 스타일 설정
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 0.7;
+
+    // 수평선 그리기
+    for (let i = 0; i < numHorizontalLines; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x, y + i * cellSize);
+        ctx.lineTo(x + width, y + i * cellSize);
+        ctx.stroke();
+    }
+
+    // 수직선 그리기
+    for (let i = 0; i < numVerticalLines; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x + i * cellSize, y);
+        ctx.lineTo(x + i * cellSize, y + height);
         ctx.stroke();
     }
 }

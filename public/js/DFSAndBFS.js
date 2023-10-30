@@ -48,8 +48,8 @@ async function DFSAndBFS(node) {
         drawArrowBetweenNodes(node, neighbors[i], "gray", "red", "red");
 
         await DFSAndBFS(neighbors[i]);
+        
         await delay();
-
         drawArrowBetweenNodes(node, neighbors[i], "gray", "gray", "gray");
     }
 }

@@ -35,71 +35,64 @@ document.getElementById("insertionSort").addEventListener("click", () => {
 async function bubbleSort() {
     for(let i = 0; i < array.length; ++i) {
         for(let j = 0; j < array.length - i - 1; ++j) {
-            await delay();
             if (!lock) return;
 
-            drawArrayByIndex(j, 'yellow');
-            drawArrayByIndex(j + 1, 'blue');
+            await drawArrayByIndexWithDelay(j, 'yellow');
+            await drawArrayByIndexWithDelay(j + 1, 'blue');
 
             outputCmpCount(++cmpCount);
             if(array[j] > array[j + 1]) {
-                await delay();
-                drawArrayByIndex(j, 'blue');
-                drawArrayByIndex(j + 1, 'red');
+                await drawArrayByIndexWithDelay(j, 'blue');
+                await drawArrayByIndexWithDelay(j + 1, 'red');
 
                 let temp = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = temp;
+
+                await drawArrayByIndexWithDelay(j, 'black');
+                await drawArrayByIndexWithDelay(j + 1, 'black');
             }
 
-            await delay();
-            drawArray();
+            await drawArrayByIndexWithDelay(j, 'black');
+            await drawArrayByIndexWithDelay(j + 1, 'black');
         }
     }
-
-    lock = false;
 }
 
 async function selectionSort() {
     for(let i = 0; i < array.length - 1; ++i) {
         let minIdx = i;
 
-        drawArrayByIndex(minIdx, 'green');
+        await drawArrayByIndexWithDelay(minIdx, 'green');
         for(let j = i + 1; j < array.length; ++j) {
-            await delay();
             if(!lock) return;
 
-            drawArrayByIndex(j, 'yellow');
+            await drawArrayByIndexWithDelay(j, 'yellow');
 
             outputCmpCount(++cmpCount);
 
-            await delay();
             if(array[minIdx] > array[j]) {
-                drawArrayByIndex(minIdx, 'red');
-                drawArrayByIndex(j, 'red');
-                await delay();
+                await drawArrayByIndexWithDelay(minIdx, 'red');
+                await drawArrayByIndexWithDelay(j, 'red');
 
-                drawArrayByIndex(minIdx, 'black');
-                drawArrayByIndex(j, 'blue');
+                await drawArrayByIndexWithDelay(minIdx, 'black');
+                await drawArrayByIndexWithDelay(j, 'blue');
                 minIdx = j;
             } else {
-                drawArrayByIndex(j, 'black');
+                await drawArrayByIndexWithDelay(j, 'black');
             }
         }
 
-        await delay();
-        drawArrayByIndex(i, 'red');
-        drawArrayByIndex(minIdx, 'red');
+        await drawArrayByIndexWithDelay(i, 'red');
+        await drawArrayByIndexWithDelay(minIdx, 'red');
 
         let temp = array[i];
         array[i] = array[minIdx];
         array[minIdx] = temp;
 
-        await delay();
-        drawArray();
+        await drawArrayByIndexWithDelay(i, 'black');
+        await drawArrayByIndexWithDelay(minIdx, 'black');
     }
-
-    lock = false;
 }
 
 async function insertionSort() {
@@ -107,31 +100,26 @@ async function insertionSort() {
         let j = i - 1;
         let key = array[i];
 
-        drawArrayByIndex(i, 'red');
+        await drawArrayByIndexWithDelay(i, 'red');
 
         while(true) {
             outputCmpCount(++cmpCount);
             if(j < 0 || array[j] <= key) break;
 
-            await delay();
             if(!lock) return;
 
-            drawArrayByIndex(j, 'yellow');
+            await drawArrayByIndexWithDelay(j, 'yellow');
 
-            await delay();
             array[j + 1] = array[j];
-            drawArrayByIndex(j, 'black');
-            drawArrayByIndex(j + 1, 'black');
+            await drawArrayByIndexWithDelay(j, 'black');
+            await drawArrayByIndexWithDelay(j + 1, 'black');
             --j;
         }
 
-        await delay();
-        drawArrayByIndex(j + 1, 'red');
+        await drawArrayByIndexWithDelay(j + 1, 'red');
         array[j + 1] = key;
 
-        await delay();
-        drawArray();
+        await drawArrayByIndexWithDelay(i, 'black');
+        await drawArrayByIndexWithDelay(j + 1, 'black');
     }
-
-    lock = false;
 }

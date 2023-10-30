@@ -74,74 +74,67 @@ function assignBarWidthAndHeightUnit() {
     barHeightUnit = canvas.height / Math.max(...array);
 }
 
-function drawArrayByIndex(i, color = 'black') {
-    assignBarWidthAndHeightUnit();
-    drawRectangle(i * barWidth, canvas.height - array[i] * barHeightUnit, barWidth, array[i] * barHeightUnit, color);
+async function drawArrayByIndexWithDelay(i, color = 'black') {
+    if(delayTime < 0) return;
+
+    await conditionalDelay(delayTime);
+
+    const barLeft = Math.floor(i * barWidth), barRight = Math.ceil(barWidth);
+
+    ctx.clearRect(barLeft, 0,  barRight, canvas.height);
+
+    drawRectangle(barLeft, canvas.height - array[i] * barHeightUnit,barRight, array[i] * barHeightUnit, color);
 }
 
 async function drawArrayByIndexRangeWithDelay(left, right, pivot, color = 'black') {
+    if(delayTime < 0) return;
     outputArrayValues();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrid('lightgray');
-
-    if(pivot >= 0)
-        drawVerticalLine(pivot * barHeightUnit, 'yellow');
-
-    for(let i = 0; i < left; ++i) {
-        const barHeight = array[i] * barHeightUnit;
-        const x = i * barWidth;
-        const y = canvas.height - barHeight;
-
-        drawRectangle(x, y, barWidth, barHeight, color);
-    }
-
-    for(let i = right; i < array.length; ++i) {
-        const barHeight = array[i] * barHeightUnit;
-        const x = i * barWidth;
-        const y = canvas.height - barHeight;
-
-        drawRectangle(x, y, barWidth, barHeight, color);
-    }
-
-    drawVerticalLine(pivot * barHeightUnit, 'yellow');
-
     for(let i = left; i < right; ++i) {
-        const barHeight = array[i] * barHeightUnit;
-        const x = i * barWidth;
-        const y = canvas.height - barHeight;
-
         if(!lock) return;
-        await delay();
 
         if(pivot < 0) {
-            drawRectangle(x, y, barWidth, barHeight, 'lightgreen');
+            await drawArrayByIndexWithDelay(i, 'lightgreen');
             continue;
         }
 
         if(array[i] < pivot) {
-            drawRectangle(x, y, barWidth, barHeight, 'blue');
+            await drawArrayByIndexWithDelay(i, 'blue');
         } else {
-            drawRectangle(x, y, barWidth, barHeight, 'red');
+            await drawArrayByIndexWithDelay(i, 'red');
         }
         drawVerticalLine(pivot * barHeightUnit, 'yellow');
     }
 }
 
+function drawArrayByIndexRange(left, right, pivot, color = 'black') {
+    if(delayTime < 0) return;
+
+    ctx.clearRect(left * barWidth, 0, (right - left) * barWidth, canvas.height);
+
+    for(let i = left; i < right; ++i) {
+        const barHeight = array[i] * barHeightUnit;
+        const barLeft = Math.floor(i * barWidth), barRight = Math.ceil(barWidth);
+        const y = canvas.height - barHeight;
+
+        if(!lock) return;
+
+        drawRectangle(barLeft, y, barRight, barHeight, color);
+    }
+}
 
 function drawArray() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrid('lightgray');
 
     assignBarWidthAndHeightUnit();
     outputArrayValues();
 
     for (let i = 0; i < array.length; i++) {
         const barHeight = array[i] * barHeightUnit;
-        const x = i * barWidth;
+        const barLeft = Math.floor(i * barWidth), barRight = Math.ceil(barWidth);
         const y = canvas.height - barHeight;
 
-        drawRectangle(x, y, barWidth, barHeight, 'black');
+        drawRectangle(barLeft, y, barRight, barHeight, 'black');
     }
 }
 
@@ -199,6 +192,3 @@ async function reset() {
     cmpCountText.innerText = 'COMP COUNT: 0';
     drawArray();
 }
-
-
-drawGrid('lightgray');
