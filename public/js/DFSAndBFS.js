@@ -15,6 +15,7 @@ document.getElementById("exeDFS").addEventListener("click", () => {
 
     drawGraph();
     visited = [];
+    orderOfVisit = [];
     DFSAndBFS(root).then(r => console.log(r));
 });
 
@@ -23,6 +24,7 @@ document.getElementById("exeBFS").addEventListener("click", () => {
 
     drawGraph();
     visited = [];
+    orderOfVisit = [];
     bfs(root).then(r => console.log(r));
 });
 
@@ -57,7 +59,7 @@ async function DFSAndBFS(node) {
 async function bfs(node) {
     let queue = [];
 
-    queue.push({parent: node, cur: node});
+    queue.push({parent: null, cur: node});
 
     while (queue.length) {
         let cur = queue.shift();
@@ -71,7 +73,8 @@ async function bfs(node) {
         outputOrderOfVisitText();
 
         await delay();
-        drawArrowBetweenNodes(parent, node, "gray", "red", "red");
+        if(parent !== null)
+            drawArrowBetweenNodes(parent, node, "gray", "red", "red");
 
         const neighbors = graph[node];
         for (let i = 0; i < neighbors.length; i++) {
@@ -79,6 +82,7 @@ async function bfs(node) {
         }
 
         await delay();
-        drawArrowBetweenNodes(parent, node, "gray", "gray", "gray");
+        if(parent !== null)
+            drawArrowBetweenNodes(parent, node, "gray", "gray", "gray");
     }
 }
